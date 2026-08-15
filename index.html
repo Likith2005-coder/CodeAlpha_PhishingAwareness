@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spot the Phish — Phishing Awareness Training</title>
+<meta name="description" content="An interactive phishing awareness module: mark up a real phishing email, dissect deceptive URLs, learn the social engineering levers, and test yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127907;</text></svg>">
+</head>
+<body>
+
+<a class="skip" href="#exhibit">Skip to the training</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <span class="topbar__mark">Spot&nbsp;the&nbsp;Phish</span>
+    <nav class="topbar__nav" aria-label="Sections">
+      <a href="#exhibit">Evidence</a>
+      <a href="#signals">Signals</a>
+      <a href="#urls">URLs</a>
+      <a href="#levers">Levers</a>
+      <a href="#cases">Cases</a>
+      <a href="#quiz">Test</a>
+      <a href="#playbook">Playbook</a>
+    </nav>
+  </div>
+  <div class="topbar__progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════ EXHIBIT A ═══ -->
+<section class="hero" id="exhibit">
+  <div class="wrap">
+
+    <div class="hero__head">
+      <p class="eyebrow">Phishing awareness training</p>
+      <h1 class="hero__title">
+        It looks fine.<br>
+        <span class="u-mark">That is the entire point.</span>
+      </h1>
+      <p class="hero__lede">
+        A phishing email is not supposed to look suspicious — it is designed to
+        look like every other message in your inbox. Below is a real-world style
+        credential phish. Read it the way you would read it at 9am on a Monday.
+        Then mark it up.
+      </p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit__toolbar">
+        <span class="tag">Exhibit A</span>
+        <span class="exhibit__caption">Microsoft&nbsp;365 credential phish</span>
+        <button class="btn btn--mark" id="revealBtn" aria-pressed="false">
+          <span class="btn__dot" aria-hidden="true"></span>
+          <span id="revealLabel">Mark the red flags</span>
+        </button>
+      </div>
+
+      <div class="exhibit__body">
+
+        <!-- The email itself -->
+        <article class="mail" aria-label="Suspicious email under examination">
+          <div class="mail__chrome">
+            <span class="mail__dot"></span><span class="mail__dot"></span><span class="mail__dot"></span>
+            <span class="mail__app">Inbox — 1 unread</span>
+          </div>
+
+          <dl class="mail__headers">
+            <dt>From</dt>
+            <dd>Microsoft 365 Security Team
+              &lt;<button class="ev" data-flag="1" type="button">no-reply@rnicrosoft-account.com</button>&gt;
+            </dd>
+
+            <dt>To</dt>
+            <dd><button class="ev" data-flag="2" type="button">undisclosed-recipients:;</button></dd>
+
+            <dt>Subject</dt>
+            <dd class="mail__subject"><button class="ev" data-flag="3" type="button">[URGENT] Your mailbox will be deactivated within 24 hours</button></dd>
+          </dl>
+
+          <div class="mail__body">
+            <p><button class="ev" data-flag="4" type="button">Dear User,</button></p>
+
+            <p>
+              Our system has detected unusual sign-in activity on your account and
+              your mailbox storage has exceeded the permitted limit. Your account
+              is scheduled for deactivation.
+            </p>
+
+            <p>
+              To keep your mailbox active, please
+              <button class="ev" data-flag="5" type="button">verify your identity and confirm your password</button>
+              using the secure link below.
+            </p>
+
+            <p class="mail__cta">
+              <span class="mail__button">Verify My Account</span>
+              <span class="mail__status" id="linkHover">
+                <button class="ev ev--url" data-flag="6" type="button">https://microsoft-account.com.session-verify.ru/login</button>
+              </span>
+            </p>
+
+            <p class="mail__fine">
+              Failure to verify within 24 hours will result in permanent loss of
+              all emails, contacts and files.
+            </p>
+
+            <p class="mail__sig">Microsoft Account Team</p>
+          </div>
+
+          <div class="mail__actions" aria-hidden="true">
+            <span class="mail__act">↩ Reply</span>
+            <span class="mail__act">↪ Forward</span>
+            <span class="mail__act mail__act--right">🗑 Delete</span>
+          </div>
+        </article>
+
+        <!-- The examiner's notes -->
+        <aside class="notes" aria-label="Examiner's notes">
+          <div class="notes__head">
+            <h2 class="notes__title">Examiner's notes</h2>
+            <p class="notes__count"><span id="foundCount">0</span> of 6 marked</p>
+          </div>
+
+          <ol class="notes__list" id="notesList">
+            <li class="note" data-note="1">
+              <h3>The sender domain is not Microsoft</h3>
+              <p>Read it closely: <code>rnicrosoft</code> — an <b>r</b> followed by an
+                <b>n</b>, imitating an <b>m</b>. At small sizes the two are almost
+                identical. The real domain would end in <code>@microsoft.com</code>.</p>
+            </li>
+            <li class="note" data-note="2">
+              <h3>You are not the only recipient</h3>
+              <p><code>undisclosed-recipients</code> means this went out in bulk.
+                A genuine security alert about <i>your</i> account is addressed to
+                you alone.</p>
+            </li>
+            <li class="note" data-note="3">
+              <h3>A deadline you did not agree to</h3>
+              <p>“Within 24 hours” exists to stop you thinking. Urgency is the
+                single most reliable marker of a phish, because deliberation is
+                the attacker's only real enemy.</p>
+            </li>
+            <li class="note" data-note="4">
+              <h3>It does not know your name</h3>
+              <p>Your provider knows who you are. “Dear User”, “Dear Customer” or
+                “Dear Account Holder” means the sender is working from a list, not
+                from your account.</p>
+            </li>
+            <li class="note" data-note="5">
+              <h3>No one legitimate asks for your password</h3>
+              <p>This is the bright line. Microsoft, your bank and your college
+                already have what they need to verify you. A request to “confirm
+                your password” is the payload of the attack, not a security step.</p>
+            </li>
+            <li class="note" data-note="6">
+              <h3>The link goes somewhere else entirely</h3>
+              <p>Read a domain <b>right to left</b> from the final slash.
+                The registrable domain here is <code>session-verify.ru</code> —
+                <code>microsoft-account.com</code> is just a subdomain an attacker
+                typed in to reassure you. See the dissector below.</p>
+            </li>
+          </ol>
+
+          <p class="notes__hint" id="notesHint">
+            Select any highlighted fragment in the message, or press
+            <b>Mark the red flags</b> to reveal all six.
+          </p>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ SIGNALS ═══ -->
+<section class="band" id="signals">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">The six signals</p>
+      <h2 class="band__title">What you are actually checking</h2>
+      <p class="band__lede">
+        You do not need to inspect mail headers or read source code. Six
+        questions catch the overwhelming majority of phishing attempts, and all
+        six can be asked in about ten seconds.
+      </p>
+    </header>
+
+    <ul class="signals">
+      <li class="signal">
+        <span class="signal__q">Who really sent this?</span>
+        <p>Check the address, not the display name. Anyone can set a display
+          name to “PayPal”. The domain after the <code>@</code> is the part that
+          cannot be faked without owning it.</p>
+      </li>
+      <li class="signal">
+        <span class="signal__q">Where does the link really go?</span>
+        <p>Hover it — or long-press on mobile — and read the real destination.
+          The visible text is just text, and can say anything at all.</p>
+      </li>
+      <li class="signal">
+        <span class="signal__q">Was I expecting this?</span>
+        <p>An unexpected invoice, delivery notice, or password alert is worth
+          one moment of suspicion, however ordinary it looks.</p>
+      </li>
+      <li class="signal">
+        <span class="signal__q">Is it rushing me?</span>
+        <p>Deadlines, threats of closure, “final notice”. Pressure is engineered
+          to prevent the checks you are running right now.</p>
+      </li>
+      <li class="signal">
+        <span class="signal__q">Is it asking for something it should not need?</span>
+        <p>Passwords, OTP codes, card numbers, remote access. No legitimate
+          organisation asks for these by email.</p>
+      </li>
+      <li class="signal">
+        <span class="signal__q">Does the tone fit the sender?</span>
+        <p>Odd grammar, a greeting that does not know your name, or a manager
+          who suddenly writes very differently — and only over email.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ URL DISSECTOR ═══ -->
+<section class="band band--alt" id="urls">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">Fake websites</p>
+      <h2 class="band__title">Read the address right&nbsp;to&nbsp;left</h2>
+      <p class="band__lede">
+        Almost every fake-website trick is the same trick: put a name you trust
+        somewhere in the address where it has no authority. The only part that
+        identifies a site is the <b>registrable domain</b> — the label directly
+        before the ending, plus the ending itself. Everything to its left is
+        chosen freely by whoever owns it.
+      </p>
+    </header>
+
+    <div class="dissect">
+      <div class="dissect__picker" role="tablist" aria-label="Example addresses">
+        <!-- buttons injected by app.js -->
+      </div>
+
+      <div class="dissect__stage">
+        <p class="dissect__label">Address under examination</p>
+        <div class="dissect__url" id="dissectUrl" aria-live="polite"></div>
+        <div class="dissect__verdict" id="dissectVerdict"></div>
+        <p class="dissect__note" id="dissectNote"></p>
+      </div>
+    </div>
+
+    <div class="myth">
+      <div class="myth__icon" aria-hidden="true">🔒</div>
+      <div>
+        <h3>The padlock does not mean the site is safe</h3>
+        <p>
+          It means traffic to the site is encrypted — nothing more. Certificates
+          are free and issued in minutes, so a phishing page can and usually does
+          have one. A padlock tells you nobody is reading your data in transit.
+          It says nothing about who is waiting for it at the other end.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ LEVERS ═══ -->
+<section class="band" id="levers">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">Social engineering</p>
+      <h2 class="band__title">The levers being pulled on you</h2>
+      <p class="band__lede">
+        Phishing is not a technical attack. It is a persuasion attack delivered
+        over a technical channel — which is why it works on careful people, and
+        why spotting the technique matters more than spotting the typo.
+      </p>
+    </header>
+
+    <div class="levers">
+      <article class="lever">
+        <h3 class="lever__name">Authority</h3>
+        <p class="lever__use">Impersonating someone you are not inclined to question.</p>
+        <p class="lever__eg"><span>Sounds like</span> “This is the CEO. I need this handled before the board call.”</p>
+      </article>
+      <article class="lever">
+        <h3 class="lever__name">Urgency</h3>
+        <p class="lever__use">Removing the time in which you would normally think.</p>
+        <p class="lever__eg"><span>Sounds like</span> “Your account will be suspended within 24 hours.”</p>
+      </article>
+      <article class="lever">
+        <h3 class="lever__name">Fear</h3>
+        <p class="lever__use">Threatening loss, exposure or penalty.</p>
+        <p class="lever__eg"><span>Sounds like</span> “Unusual login detected. Unauthorised charges will be processed.”</p>
+      </article>
+      <article class="lever">
+        <h3 class="lever__name">Curiosity</h3>
+        <p class="lever__use">Offering something you would like to look at.</p>
+        <p class="lever__eg"><span>Sounds like</span> “Salary revision list — final.xlsx”</p>
+      </article>
+      <article class="lever">
+        <h3 class="lever__name">Familiarity</h3>
+        <p class="lever__use">Arriving as a brand, colleague or service you already use.</p>
+        <p class="lever__eg"><span>Sounds like</span> “Your Netflix payment failed — update your details.”</p>
+      </article>
+      <article class="lever">
+        <h3 class="lever__name">Reciprocity</h3>
+        <p class="lever__use">Doing you a small favour first, so refusing feels rude.</p>
+        <p class="lever__eg"><span>Sounds like</span> “I have already approved your leave — just confirm your details.”</p>
+      </article>
+    </div>
+
+    <div class="variants">
+      <h3 class="variants__title">The same attack, other channels</h3>
+      <dl class="variants__list">
+        <div><dt>Spear phishing</dt><dd>Targeted at you specifically, using details from your employer, LinkedIn or a previous breach.</dd></div>
+        <div><dt>Whaling</dt><dd>Spear phishing aimed at executives, where a single success authorises a payment.</dd></div>
+        <div><dt>Smishing</dt><dd>Delivered by SMS — parcel redelivery, KYC updates, fake bank alerts.</dd></div>
+        <div><dt>Vishing</dt><dd>Delivered by phone call, often to talk you through “verifying” an OTP.</dd></div>
+        <div><dt>Quishing</dt><dd>A QR code in place of a link, because a printed square hides its destination completely.</dd></div>
+        <div><dt>BEC</dt><dd>Business email compromise — a real, compromised account asks for a real, routine payment.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CASES ═══ -->
+<section class="band band--alt" id="cases">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">Documented incidents</p>
+      <h2 class="band__title">It works on organisations with security teams</h2>
+      <p class="band__lede">
+        Each of these is a matter of public record — court filings, regulatory
+        disclosures or company statements. None of these victims were careless
+        amateurs.
+      </p>
+    </header>
+
+    <ol class="cases">
+      <li class="case">
+        <p class="case__loss">≈ $100M</p>
+        <h3 class="case__who">Google &amp; Facebook</h3>
+        <p class="case__when">2013–2015 · invoice fraud</p>
+        <p class="case__what">
+          A Lithuanian national registered a company using the name of Quanta
+          Computer, a genuine hardware supplier to both firms, then sent
+          invoices for goods that were never supplied. Both companies paid.
+          He pleaded guilty to wire fraud in 2019 and was sentenced to five
+          years; the majority of the money was recovered.
+        </p>
+      </li>
+      <li class="case">
+        <p class="case__loss">$46.7M</p>
+        <h3 class="case__who">Ubiquiti Networks</h3>
+        <p class="case__when">2015 · business email compromise</p>
+        <p class="case__what">
+          Attackers impersonated company executives and an outside legal
+          representative in emails to the finance department, requesting
+          transfers to overseas accounts. The company disclosed the loss in an
+          SEC filing. No systems were breached — the entire attack was email
+          and persuasion.
+        </p>
+      </li>
+      <li class="case">
+        <p class="case__loss">130 accounts</p>
+        <h3 class="case__who">Twitter</h3>
+        <p class="case__when">July 2020 · phone spear phishing</p>
+        <p class="case__what">
+          Attackers called employees while posing as internal IT support and
+          talked them into entering credentials on a convincing lookalike of
+          Twitter's own VPN login page. That access reached internal admin
+          tooling, and accounts including Obama, Musk and Apple were used to
+          post a Bitcoin scam.
+        </p>
+      </li>
+      <li class="case">
+        <p class="case__loss">40M cards</p>
+        <h3 class="case__who">Target</h3>
+        <p class="case__when">2013 · supplier as the way in</p>
+        <p class="case__what">
+          The intrusion began with a phishing email to Fazio Mechanical, a
+          refrigeration contractor with access to Target's vendor portal. Stolen
+          vendor credentials led to the point-of-sale network and roughly 40
+          million payment cards. Your weakest link may not be inside your
+          organisation.
+        </p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ QUIZ ═══ -->
+<section class="band" id="quiz">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">Check yourself</p>
+      <h2 class="band__title">Eight judgement calls</h2>
+      <p class="band__lede">
+        No trick questions. Each one is a situation that happens constantly —
+        and each answer explains the reasoning, because the reasoning is the part
+        you keep.
+      </p>
+    </header>
+
+    <div class="quiz" id="quizRoot">
+      <div class="quiz__bar" aria-hidden="true"><span id="quizProgress"></span></div>
+
+      <div class="quiz__stage">
+        <p class="quiz__meta">
+          <span>Question <span id="qNum">1</span> of <span id="qTotal">8</span></span>
+          <span class="quiz__score">Score <b id="qScore">0</b></span>
+        </p>
+        <h3 class="quiz__q" id="qText"></h3>
+        <div class="quiz__scenario" id="qScenario"></div>
+        <div class="quiz__options" id="qOptions" role="group" aria-label="Answer options"></div>
+        <div class="quiz__feedback" id="qFeedback" role="status" aria-live="polite"></div>
+        <div class="quiz__actions">
+          <button class="btn btn--ghost" id="qRestart" type="button" hidden>Start again</button>
+          <button class="btn" id="qNext" type="button" hidden>Next question</button>
+        </div>
+      </div>
+
+      <div class="quiz__result" id="qResult" hidden>
+        <p class="quiz__resultScore"><span id="qFinal">0</span><span class="quiz__resultOf">/8</span></p>
+        <h3 class="quiz__resultTitle" id="qBand"></h3>
+        <p class="quiz__resultNote" id="qAdvice"></p>
+        <button class="btn" id="qAgain" type="button">Take it again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ PLAYBOOK ═══ -->
+<section class="band band--alt" id="playbook">
+  <div class="wrap">
+    <header class="band__head">
+      <p class="eyebrow">Playbook</p>
+      <h2 class="band__title">Habits, and what to do at 2am</h2>
+    </header>
+
+    <div class="playbook">
+      <div class="play">
+        <h3 class="play__title">Build these habits</h3>
+        <ul class="play__list">
+          <li><b>Turn on multi-factor authentication.</b> It is the single highest-value
+            thing on this page. A stolen password alone stops being enough.</li>
+          <li><b>Prefer an app or hardware key over SMS codes.</b> SIM swapping and
+            real-time relay attacks defeat text messages.</li>
+          <li><b>Navigate, don't click.</b> Type the address yourself or use your own
+            bookmark. It costs five seconds and defeats the entire category.</li>
+          <li><b>Verify money and credentials on a second channel.</b> Call the person
+            on a number you already had — never the one in the message.</li>
+          <li><b>Use a password manager.</b> It refuses to autofill on a lookalike
+            domain, so it notices the fake site before you do.</li>
+          <li><b>Slow down when a message makes you feel something.</b> Urgency, fear
+            and excitement are the attack working.</li>
+        </ul>
+      </div>
+
+      <div class="play play--alarm">
+        <h3 class="play__title">If you already clicked</h3>
+        <ol class="play__steps">
+          <li><b>Do not wait, and do not hide it.</b> Minutes matter far more than
+            embarrassment does. Every hour of silence is an hour of access.</li>
+          <li><b>Disconnect the device</b> from the network if you downloaded or ran
+            anything.</li>
+          <li><b>Change the password</b> from a different, trusted device — and change
+            it anywhere you reused it.</li>
+          <li><b>Sign out all active sessions</b> in your account's security settings,
+            then check for added recovery emails, forwarding rules and app passwords.</li>
+          <li><b>Report it</b> to your IT or security team, and to the impersonated
+            organisation.</li>
+          <li><b>If money moved</b>, contact your bank immediately and ask about
+            recall. In India, report to cybercrime.gov.in or the 1930 helpline —
+            the first few hours are when funds can still be frozen.</li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="closing">
+      Reporting a phish you fell for is not an admission of incompetence. It is
+      the control that works after every other control has failed — and the
+      organisations that recover fastest are the ones where saying so is easy.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <p class="foot__title">Spot the Phish</p>
+    <p class="foot__meta">
+      Interactive phishing awareness module · CodeAlpha Cyber Security
+      Internship, Task&nbsp;2
+    </p>
+    <p class="foot__note">
+      All sample messages and addresses on this page are fabricated for training.
+      Incident figures are drawn from public court records, SEC filings and
+      company statements.
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
