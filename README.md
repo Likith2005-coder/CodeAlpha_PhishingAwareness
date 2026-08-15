@@ -24,20 +24,18 @@
 
 ---
 
-An interactive phishing awareness module, built for the **CodeAlpha Cyber
-Security Internship (Task 2)**.
+Security awareness training that people actually finish, because it is
+something you do rather than something you sit through. You mark up a
+real-style phishing email yourself, take apart the addresses behind fake
+websites, and then get tested on eight situations that happen constantly.
 
-Rather than a slide deck, this is a self-contained web module you work
-*through*: you mark up a real-style phishing email yourself, take apart the
-addresses used by fake websites, and then get tested on eight situations that
-happen constantly.
+**It covers**
 
-> **Task requirements covered**
-> - [x] Create a presentation or online module focused on phishing attacks
-> - [x] Explain how to recognise phishing emails **and fake websites**
-> - [x] Educate about social engineering tactics used by attackers
-> - [x] Provide best practices and tips to avoid falling victim
-> - [x] Include real-world examples **and interactive quizzes**
+- Recognising phishing emails, and the fake websites they lead to
+- The social engineering techniques behind them, and why they work
+- Practical habits that prevent it, and what to do once you have clicked
+- Real, documented incidents with sourced figures
+- An interactive quiz that explains its reasoning rather than just scoring you
 
 ---
 
@@ -182,7 +180,10 @@ contains no tooling for conducting an attack.
 
 ---
 
-## Author
+## Licence
 
-Built for the **CodeAlpha Cyber Security Internship** — Task 2: Phishing
-Awareness Training.
+MIT — see [LICENSE](LICENSE). Free to use for internal security awareness
+training; adapt the examples to your own organisation's brands and services
+and it will land harder.
+
+<sub>Built during the CodeAlpha Cyber Security Internship.</sub>
