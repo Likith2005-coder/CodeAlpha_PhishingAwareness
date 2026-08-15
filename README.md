@@ -1,7 +1,31 @@
-# CodeAlpha Task 2 — Phishing Awareness Training
+# Spot the Phish — Phishing Awareness Training
 
-**Spot the Phish** — an interactive phishing awareness module, built for the
-**CodeAlpha Cyber Security Internship (Task 2)**.
+<div align="center">
+
+### ▶&nbsp; [**TRY THE LIVE MODULE**](https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/) &nbsp;◀
+
+<a href="https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/">
+  <img src="https://img.shields.io/badge/OPEN_THE_INTERACTIVE_MODULE-0b6e63?style=for-the-badge&labelColor=0e1723" alt="Open the interactive module" height="44">
+</a>
+
+<br><br>
+
+<a href="https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/">
+  <img src="docs/preview.png" alt="Spot the Phish — a phishing email with all six red flags marked and explained" width="900">
+</a>
+
+<sub>Exhibit A with all six red flags marked · <a href="https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/"><b>open it and mark them yourself →</b></a></sub>
+
+</div>
+
+> [!TIP]
+> **Runs in your browser — nothing to install, no build step.**
+> **https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/**
+
+---
+
+An interactive phishing awareness module, built for the **CodeAlpha Cyber
+Security Internship (Task 2)**.
 
 Rather than a slide deck, this is a self-contained web module you work
 *through*: you mark up a real-style phishing email yourself, take apart the
@@ -19,7 +43,10 @@ happen constantly.
 
 ## Run it
 
-No build step, no dependencies, no server.
+**Easiest — just open the hosted version:**
+### 🔗 https://likith2005-coder.github.io/CodeAlpha_PhishingAwareness/
+
+**Or run it locally.** No build step, no dependencies, no server:
 
 ```bash
 git clone <repository-url>
